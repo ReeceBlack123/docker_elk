@@ -2,6 +2,7 @@ version: '3.2'
 
 services:
   elasticsearch:
+    container_name: elk_elasticsearch
     build:
       context: elasticsearch/
       args:
@@ -19,7 +20,6 @@ services:
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
@@ -27,6 +27,7 @@ services:
       - elk
 
   logstash:
+    container_name: elk_logstash
     build:
       context: logstash/
       args:
@@ -52,6 +53,7 @@ services:
       - elasticsearch
 
   kibana:
+    container_name: elk_kibana
     build:
       context: kibana/
       args:
